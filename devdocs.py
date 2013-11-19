@@ -15,14 +15,22 @@ def SearchFor(text):
 
 class DevDocsSearchSelectionCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        for selection in self.view.sel():
-            # if the user didn't select anything, search the currently highlighted word
-            if selection.empty():
-                text = self.view.word(selection)
+        #for selection in self.view.sel():
+            ## if the user didn't select anything, search the currently highlighted word
+            #if selection.empty():
+                #text = self.view.word(selection)
 
-            text = self.view.substr(selection)
-            SearchFor(text)
+            #text = self.view.substr(selection)
+            #SearchFor(text)
 
+        # just search for the first selection word
+        # if it's null, search for the word under the cursor 
+        # 2013-11-19 added by yleo77
+        selection = self.view.sel()[0]
+        if len(selection) == 0:
+            selection = self.view.word(selection)
+        text = self.view.substr(selection)   
+        SearchFor(text)
 
 class DevDocsSearchFromInputCommand(sublime_plugin.WindowCommand):
     def run(self):
